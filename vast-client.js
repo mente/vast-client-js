@@ -58,10 +58,8 @@ EventEmitter.prototype.emit = function(type) {
       er = arguments[1];
       if (er instanceof Error) {
         throw er; // Unhandled 'error' event
-      } else {
-        throw TypeError('Uncaught, unspecified "error" event.');
       }
-      return false;
+      throw TypeError('Uncaught, unspecified "error" event.');
     }
   }
 
@@ -498,6 +496,7 @@ VASTMediaFile = (function() {
     this.maxBitrate = 0;
     this.width = 0;
     this.height = 0;
+    this.apiFramework = null;
   }
 
   return VASTMediaFile;
@@ -854,6 +853,7 @@ VASTParser = (function() {
         mediaFile.deliveryType = mediaFileElement.getAttribute("delivery");
         mediaFile.codec = mediaFileElement.getAttribute("codec");
         mediaFile.mimeType = mediaFileElement.getAttribute("type");
+        mediaFile.apiFramework = mediaFileElement.getAttribute("apiFramework");
         mediaFile.bitrate = parseInt(mediaFileElement.getAttribute("bitrate") || 0);
         mediaFile.minBitrate = parseInt(mediaFileElement.getAttribute("minBitrate") || 0);
         mediaFile.maxBitrate = parseInt(mediaFileElement.getAttribute("maxBitrate") || 0);
