@@ -984,12 +984,7 @@ VASTTracker = (function(_super) {
       this.trackingEvents[eventName] = events.slice(0);
     }
     if (creative instanceof VASTCreativeLinear) {
-      this.assetDuration = creative.duration;
-      this.quartiles = {
-        'firstQuartile': Math.round(25 * this.assetDuration) / 100,
-        'midpoint': Math.round(50 * this.assetDuration) / 100,
-        'thirdQuartile': Math.round(75 * this.assetDuration) / 100
-      };
+      this.setDuration(creative.duration);
       this.skipDelay = creative.skipDelay;
       this.linear = true;
       this.clickThroughURLTemplate = creative.videoClickThroughURLTemplate;
@@ -1002,6 +997,15 @@ VASTTracker = (function(_super) {
       VASTClient.lastSuccessfullAd = +new Date();
     });
   }
+
+  VASTTracker.prototype.setDuration = function(duration) {
+    this.assetDuration = duration;
+    return this.quartiles = {
+      'firstQuartile': Math.round(25 * this.assetDuration) / 100,
+      'midpoint': Math.round(50 * this.assetDuration) / 100,
+      'thirdQuartile': Math.round(75 * this.assetDuration) / 100
+    };
+  };
 
   VASTTracker.prototype.setProgress = function(progress) {
     var eventName, events, percent, quartile, skipDelay, time, _i, _len, _ref;
